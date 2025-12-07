@@ -1,5 +1,18 @@
+// src/components/Contact.jsx
 import { useState } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Textarea,
+  Alert,
+  AlertIcon,
+  VStack,
+} from "@chakra-ui/react";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -22,53 +35,54 @@ export default function Contact() {
   }
 
   return (
-    <section className="app-page">
-      <Container className="page-narrow">
-        <h1 className="mb-4">Contact Me</h1>
+    <Box as="section" py={8}>
+      <Container maxW="lg">
+        <Heading mb={6}>Contact Me</Heading>
 
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="contactName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+        <Box as="form" onSubmit={handleSubmit}>
+          <VStack align="stretch" spacing={4}>
+            <FormControl isRequired>
+              <FormLabel>Name</FormLabel>
+              <Input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+              />
+            </FormControl>
 
-          <Form.Group className="mb-3" controlId="contactEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <FormControl isRequired>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+              />
+            </FormControl>
 
-          <Form.Group className="mb-3" controlId="contactMessage">
-            <Form.Label>Message</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={4}
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <FormControl isRequired>
+              <FormLabel>Message</FormLabel>
+              <Textarea
+                rows={4}
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+              />
+            </FormControl>
 
-          <Button type="submit">Send</Button>
-        </Form>
+            <Button type="submit" colorScheme="teal" alignSelf="flex-start">
+              Send
+            </Button>
 
-        {submitted && (
-          <Alert variant="success" className="mt-3">
-            Thanks! Your message was recorded (check console for now).
-          </Alert>
-        )}
+            {submitted && (
+              <Alert status="success">
+                <AlertIcon />
+                Thanks! Your message was recorded (check console for now).
+              </Alert>
+            )}
+          </VStack>
+        </Box>
       </Container>
-    </section>
+    </Box>
   );
 }

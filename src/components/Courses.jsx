@@ -1,4 +1,5 @@
-import { Container, Row, Col } from "react-bootstrap";
+// src/components/Courses.jsx
+import { Box, Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import CourseCard from "./CourseCard";
 
 const courses = [
@@ -54,22 +55,20 @@ const courses = [
 
 export default function Courses() {
   return (
-    <section className="app-page">
-      <Container>
-        <h1 className="mb-3">Courses</h1>
-        <p className="text-muted mb-4">
+    <Box as="section" py={8}>
+      <Container maxW="6xl">
+        <Heading mb={2}>Courses</Heading>
+        <Text color="gray.600" mb={6}>
           A selection of classes that shaped how I think about systems,
           hardware, mobile, and web development.
-        </p>
+        </Text>
 
-        <Row className="g-4">
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
           {courses.map((course) => (
-            <Col key={course.code} md={6}>
-              <CourseCard {...course} />
-            </Col>
+            <CourseCard key={course.code} {...course} />
           ))}
-        </Row>
+        </SimpleGrid>
       </Container>
-    </section>
+    </Box>
   );
 }

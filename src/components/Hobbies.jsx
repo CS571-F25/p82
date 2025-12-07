@@ -1,5 +1,5 @@
 // src/components/Hobbies.jsx
-import { Container, Row, Col } from "react-bootstrap";
+import { Box, Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import HobbyCard from "./HobbyCard";
 
 const hobbies = [
@@ -51,22 +51,20 @@ const hobbies = [
 
 export default function Hobbies() {
   return (
-    <section className="app-page">
-      <Container>
-        <h1 className="mb-3">Hobbies</h1>
-        <p className="text-muted mb-4">
+    <Box as="section" py={8}>
+      <Container maxW="6xl">
+        <Heading mb={2}>Hobbies</Heading>
+        <Text color="gray.600" mb={6}>
           A few things I enjoy outside of classes and work that keep me balanced
           and motivated.
-        </p>
+        </Text>
 
-        <Row className="g-4">
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
           {hobbies.map((hobby) => (
-            <Col key={hobby.title} md={6}>
-              <HobbyCard {...hobby} />
-            </Col>
+            <HobbyCard key={hobby.title} {...hobby} />
           ))}
-        </Row>
+        </SimpleGrid>
       </Container>
-    </section>
+    </Box>
   );
 }

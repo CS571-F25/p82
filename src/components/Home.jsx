@@ -1,66 +1,103 @@
-import { Container, Row, Col, Image, Button, Stack } from "react-bootstrap";
-import headshot from "../assets/artur-headshot.png"; // your PNG
+// src/components/Home.jsx
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  Divider,
+} from "@chakra-ui/react";
+import headshot from "../assets/artur-headshot.png";
 
 export default function Home() {
   return (
-    <section className="app-page home-section">
-
-      {/* HERO SECTION */}
-      <Container className="text-center mb-5">
-        <h1 className="home-title">Artur Sobol</h1>
-        <p className="lead">
+    <Box as="section" py={10}>
+      {/* HERO */}
+      <Container maxW="5xl" textAlign="center" mb={10}>
+        <Heading
+          as="h1"
+          size="2xl"
+          mb={2}
+          className="home-title" // optional; keeps your font size clamp if you like
+        >
+          Artur Sobol
+        </Heading>
+        <Text fontSize="lg" color="gray.600">
           Computer Science Student • UW–Madison
-        </p>
+        </Text>
 
-        <Stack direction="horizontal" gap={3} className="justify-content-center mt-3">
-          <Button href="#/projects">View Projects</Button>
-          <Button variant="outline-secondary" href="#/resume">
+        <Stack
+          direction={{ base: "column", sm: "row" }}
+          spacing={4}
+          justify="center"
+          mt={6}
+        >
+          <Button as="a" href="#/projects" colorScheme="teal">
+            View Projects
+          </Button>
+          <Button as="a" href="#/resume" variant="outline" colorScheme="gray">
             View Resume
           </Button>
         </Stack>
       </Container>
 
-      {/* ABOUT ME SECTION */}
-      <Container className="about-layout">
-        <Row className="align-items-center g-4">
+      {/* ABOUT */}
+      <Container maxW="6xl">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          align="center"
+          gap={8}
+        >
           {/* Photo */}
-          <Col md={4} className="text-center">
+          <Box flexBasis={{ base: "100%", md: "30%" }} textAlign="center">
             <Image
               src={headshot}
               alt="Artur Sobol"
-              fluid
-              className="about-photo"
+              borderRadius="md"
+              boxShadow="lg"
+              maxW="260px"
+              mx="auto"
             />
-          </Col>
+          </Box>
 
-          {/* Divider */}
-          <Col md="auto" className="d-none d-md-flex justify-content-center px-0">
-            <div className="about-divider" />
-          </Col>
+          {/* Divider for md+ */}
+          <Box
+            display={{ base: "none", md: "block" }}
+            alignSelf="stretch"
+            px={4}
+          >
+            <Divider orientation="vertical" />
+          </Box>
 
           {/* Text */}
-          <Col md={7}>
-            <h2 className="about-section-title">About Me</h2>
+          <Box flexBasis={{ base: "100%", md: "60%" }}>
+            <Heading as="h2" size="lg" mb={4}>
+              About Me
+            </Heading>
 
-            <p className="about-text">
-              Hi, my name is Artur Sobol and I’m a junior student at the 
-              University of Wisconsin–Madison. I’m currently pursuing a major in 
+            <Text mb={3} fontSize="md" lineHeight="1.7">
+              Hi, my name is Artur Sobol and I’m a junior student at the
+              University of Wisconsin–Madison. I’m currently pursuing a major in
               Computer Science and possibly Computer Engineering.
-            </p>
+            </Text>
 
-            <p className="about-text">
-              I’m passionate about low-level computer architecture and how it can 
-              be used with higher-level programs to maximize efficiency. Some of my 
-              hobbies include skiing, collecting Legos, and football.
-            </p>
+            <Text mb={3} fontSize="md" lineHeight="1.7">
+              I’m passionate about low-level computer architecture and how it
+              can be used with higher-level programs to maximize efficiency.
+              Some of my hobbies include skiing, collecting Legos, and
+              football.
+            </Text>
 
-            <p className="about-text">
-              This website summarizes me as a person and outlines my academic 
+            <Text fontSize="md" lineHeight="1.7">
+              This website summarizes me as a person and outlines my academic
               achievements and projects.
-            </p>
-          </Col>
-        </Row>
+            </Text>
+          </Box>
+        </Flex>
       </Container>
-    </section>
+    </Box>
   );
 }

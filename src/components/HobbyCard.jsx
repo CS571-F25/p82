@@ -1,35 +1,56 @@
 // src/components/HobbyCard.jsx
-import { Card, Badge } from "react-bootstrap";
+import {
+  Box,
+  Text,
+  Heading,
+  Badge,
+  VStack,
+  List,
+  ListItem,
+} from "@chakra-ui/react";
 
-export default function HobbyCard({ title, emoji, category, description, details = [] }) {
+export default function HobbyCard({
+  title,
+  emoji,
+  category,
+  description,
+  details = [],
+}) {
   return (
-    <Card className="h-100 hobby-card">
-      <Card.Body>
-        <div className="d-flex align-items-center mb-2">
+    <Box
+      p={5}
+      borderRadius="lg"
+      bg="white"
+      shadow="md"
+      transition="0.15s"
+      _hover={{ transform: "translateY(-3px)", shadow: "xl" }}
+    >
+      <VStack align="start" spacing={2}>
+        <Heading size="md" display="flex" alignItems="center" gap={2}>
           {emoji && (
-            <span className="hobby-emoji me-2" aria-hidden="true">
+            <span style={{ fontSize: "1.6rem" }} aria-hidden="true">
               {emoji}
             </span>
           )}
-          <Card.Title className="mb-0">{title}</Card.Title>
-        </div>
+          {title}
+        </Heading>
 
         {category && (
-          <Badge bg="secondary" className="mb-2">
+          <Badge colorScheme="purple" mb={1}>
             {category}
           </Badge>
         )}
 
-        {description && <Card.Text className="mb-2">{description}</Card.Text>}
+        {description && <Text>{description}</Text>}
 
         {details.length > 0 && (
-          <ul className="mb-0">
+          <List spacing={1}>
             {details.map((item) => (
-              <li key={item}>{item}</li>
+              <ListItem key={item}>• {item}</ListItem>
             ))}
-          </ul>
+          </List>
         )}
-      </Card.Body>
-    </Card>
+      </VStack>
+    </Box>
   );
 }

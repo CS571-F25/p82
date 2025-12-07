@@ -1,20 +1,23 @@
-import { Card } from "react-bootstrap";
+// src/components/ProjectCard.jsx
+import { Card, CardBody, Heading, Text } from "@chakra-ui/react";
 
 export default function ProjectCard({ title, timeframe, description, tech }) {
   return (
-    <Card className="h-100">
-      <Card.Body>
-        <Card.Title className="mb-1">{title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
+    <Card h="100%">
+      <CardBody>
+        <Heading size="md" mb={1}>
+          {title}
+        </Heading>
+        <Text fontSize="sm" color="gray.500" mb={2}>
           {timeframe}
-        </Card.Subtitle>
-        <Card.Text>{description}</Card.Text>
+        </Text>
+        <Text mb={3}>{description}</Text>
         {tech && (
-          <Card.Text className="mb-0">
+          <Text fontSize="sm">
             <strong>Tech:</strong> {tech}
-          </Card.Text>
+          </Text>
         )}
-      </Card.Body>
+      </CardBody>
     </Card>
   );
 }
