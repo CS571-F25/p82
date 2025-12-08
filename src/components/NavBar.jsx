@@ -1,14 +1,15 @@
 // src/components/NavBar.jsx
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Box,
   Flex,
   HStack,
   IconButton,
-  useDisclosure,
   Stack,
-  Container,
+  Link,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -21,65 +22,117 @@ const links = [
   { to: "/contact", label: "Contact" },
 ];
 
-function NavLinkItem({ to, label, end }) {
+function NavItem({ to, label, end, onClick }) {
   return (
-    <Box
-      as={NavLink}
-      to={to}
-      end={end}
-      px={3}
-      py={2}
-      rounded="md"
-      fontSize="sm"
-      _hover={{ bg: "gray.700" }}
-      style={({ isActive }) => ({
-        backgroundColor: isActive ? "#2D3748" : "transparent",
-        color: "white",
-      })}
-    >
-      {label}
-    </Box>
+    <NavLink to={to} end={end}>
+      {({ isActive }) => (
+        <Link
+          px={3}
+          py={2}
+          rounded="full"
+          fontSize="sm"
+          fontWeight={isActive ? "semibold" : "medium"}
+          bg={isActive ? "whiteAlpha.200" : "transparent"}
+          color="white"
+          _hover={{ textDecoration: "none", bg: "whiteAlpha.200" }}
+          onClick={onClick}
+        >
+          {label}
+        </Link>
+      )}
+    </NavLink>
   );
 }
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [menuButtonFocused, setMenuButtonFocused] = useState(false);
+
+  const handleNavClick = () => {
+    onClose();
+  };
 
   return (
-    <Box bg="gray.900" color="white" position="sticky" top={0} zIndex={10}>
-      <Container maxW="6xl">
-        <Flex h={16} alignItems="center" justifyContent="space-between">
-          <Text fontWeight="bold">Artur Sobol</Text>
+    <Box
+      as="header"
+      bg="gray.900"
+      color="white"
+      position="sticky"
+      top={0}
+      zIndex={1000}
+      boxShadow="sm"
+    >
+      <Flex
+        maxW="6xl"
+        mx="auto"
+        px={{ base: 4, md: 6 }}
+        h={16}
+        align="center"
+        justify="space-between"
+      >
+        {/* Brand */}
+        <NavLink to="/" onClick={handleNavClick}>
+          <Text
+            fontWeight="semibold"
+            fontSize="lg"
+            letterSpacing="wide"
+            _hover={{ textDecoration: "none" }}
+          >
+            Artur Sobol
+          </Text>
+        </NavLink>
 
-          {/* Desktop links */}
-          <HStack spacing={4} display={{ base: "none", md: "flex" }}>
+        {/* Desktop links */}
+        <HStack spacing={2} display={{ base: "none", md: "flex" }}>
+          {links.map((link) => (
+            <NavItem
+              key={link.to}
+              {...link}
+              onClick={handleNavClick}
+            />
+          ))}
+        </HStack>
+
+        {/* Mobile menu button */}
+        <IconButton
+          display={{ base: "flex", md: "none" }}
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          variant="ghost"
+          color="white"
+          _hover={{ bg: "whiteAlpha.200" }}
+          _active={{ bg: "whiteAlpha.300" }}
+          onClick={isOpen ? onClose : onOpen}
+          onFocus={() => setMenuButtonFocused(true)}
+          onBlur={() => setMenuButtonFocused(false)}
+        />
+      </Flex>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <Box
+          bg="gray.900"
+          borderTopWidth="1px"
+          borderColor="whiteAlpha.200"
+          display={{ base: "block", md: "none" }}
+        >
+          <Stack
+            maxW="6xl"
+            mx="auto"
+            px={{ base: 4, md: 6 }}
+            py={3}
+            spacing={1}
+          >
             {links.map((link) => (
-              <NavLinkItem key={link.to} {...link} />
+              <NavItem
+                key={link.to}
+                {...link}
+                onClick={handleNavClick}
+              />
             ))}
-          </HStack>
-
-          {/* Mobile menu button */}
-          <IconButton
-            size="md"
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label="Open Menu"
-            display={{ base: "flex", md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-            variant="ghost"
-          />
-        </Flex>
-
-        {/* Mobile menu */}
-        {isOpen && (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as="nav" spacing={1}>
-              {links.map((link) => (
-                <NavLinkItem key={link.to} {...link} />
-              ))}
-            </Stack>
-          </Box>
-        )}
-      </Container>
+          </Stack>
+        </Box>
+      )}
     </Box>
   );
 }

@@ -1,56 +1,47 @@
 // src/components/HobbyCard.jsx
-import {
-  Box,
-  Text,
-  Heading,
-  Badge,
-  VStack,
-  List,
-  ListItem,
-} from "@chakra-ui/react";
+import { Card } from "react-bootstrap";
 
 export default function HobbyCard({
   title,
   emoji,
-  category,
   description,
   details = [],
+  image,
 }) {
   return (
-    <Box
-      p={5}
-      borderRadius="lg"
-      bg="white"
-      shadow="md"
-      transition="0.15s"
-      _hover={{ transform: "translateY(-3px)", shadow: "xl" }}
-    >
-      <VStack align="start" spacing={2}>
-        <Heading size="md" display="flex" alignItems="center" gap={2}>
-          {emoji && (
-            <span style={{ fontSize: "1.6rem" }} aria-hidden="true">
-              {emoji}
-            </span>
-          )}
-          {title}
-        </Heading>
+    <Card className="hobby-card border-0">
+      {image && (
+        <div className="hobby-image-wrapper">
+          <Card.Img src={image} alt={title} className="hobby-image" />
+          <div className="hobby-image-overlay">
+            <span className="hobby-image-emoji">{emoji}</span>
+            <span className="hobby-image-title">{title}</span>
+          </div>
+        </div>
+      )}
 
-        {category && (
-          <Badge colorScheme="purple" mb={1}>
-            {category}
-          </Badge>
+      <Card.Body className="hobby-body">
+        {/* Fallback if some hobby ever doesn’t have an image */}
+        {!image && (
+          <Card.Title className="hobby-title mb-2">
+            {emoji} {title}
+          </Card.Title>
         )}
 
-        {description && <Text>{description}</Text>}
+        {description && (
+          <Card.Text className="hobby-description mb-2">
+            {description}
+          </Card.Text>
+        )}
 
         {details.length > 0 && (
-          <List spacing={1}>
+          <ul className="hobby-list">
             {details.map((item) => (
-              <ListItem key={item}>• {item}</ListItem>
+              <li key={item}>{item}</li>
             ))}
-          </List>
+          </ul>
         )}
-      </VStack>
-    </Box>
+      </Card.Body>
+    </Card>
   );
 }

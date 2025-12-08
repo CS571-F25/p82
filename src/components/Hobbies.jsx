@@ -1,70 +1,83 @@
 // src/components/Hobbies.jsx
-import { Box, Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Container, Row, Col } from "react-bootstrap";
 import HobbyCard from "./HobbyCard";
+
+import skiingImg from "../assets/skiing.jpg";
+import footballImg from "../assets/football.jpg";
+import legosImg from "../assets/legos.png";
+import rainierImg from "../assets/rainier.jpg";
 
 const hobbies = [
   {
     title: "Skiing",
     emoji: "🎿",
-    category: "Outdoors",
+    image: skiingImg,
     description:
-      "I love skiing in the winter and chasing better runs each season.",
+      "Chasing better runs each season and any excuse to be in the mountains.",
     details: [
-      "Enjoy both resort skiing and occasional trips out west",
-      "Like the mix of speed, control, and being outside in the cold",
-    ],
-  },
-  {
-    title: "Collecting LEGO",
-    emoji: "🧱",
-    category: "Building",
-    description:
-      "I collect and build LEGO sets, especially ones that mix engineering and design.",
-    details: [
-      "Enjoy detailed car / architecture / sci-fi sets",
-      "Helps me relax while still thinking about structure and systems",
+      "Resort days plus the occasional bigger trip out west",
+      "Love the mix of speed, control, and cold air",
     ],
   },
   {
     title: "Football",
     emoji: "🏈",
-    category: "Sports",
+    image: footballImg,
     description:
-      "I’m a big football fan and follow both college and professional games.",
+      "One of my favorite ways to get outside, compete, and hang out with friends.",
     details: [
-      "Love breaking down plays and strategies",
-      "Football season is my favorite time of the year",
+      "Pick-up games and intramurals when schedules line up",
+      "Care about the strategy almost as much as the score",
     ],
   },
   {
-    title: "Tech & Side Projects",
-    emoji: "💻",
-    category: "Tech",
+    title: "Mountaineering & Hiking",
+    emoji: "🗻",
+    image: rainierImg,
     description:
-      "Outside of school, I like experimenting with small coding or hardware projects.",
+      "Long hikes, summit days, and anything that involves a big view.",
     details: [
-      "Try out new frameworks and tools for fun",
-      "Build things that automate small parts of my life",
+      "Trips to places like Rainier and other PNW trails",
+      "Big fan of ridgelines and feeling way above everything",
+    ],
+  },
+  {
+    title: "LEGOs & Building",
+    emoji: "🧱",
+    image: legosImg,
+    description:
+      "Still love building LEGO sets and messing around with my own designs.",
+    details: [
+      "Relaxing way to build things without touching a keyboard",
+      "Sometimes recreate places or objects from games and shows",
     ],
   },
 ];
 
 export default function Hobbies() {
   return (
-    <Box as="section" py={8}>
-      <Container maxW="6xl">
-        <Heading mb={2}>Hobbies</Heading>
-        <Text color="gray.600" mb={6}>
-          A few things I enjoy outside of classes and work that keep me balanced
-          and motivated.
-        </Text>
+    <section className="app-page hobbies-section">
+      <Container className="hobbies-container">
+        <div className="hobbies-header">
+          <span className="hobbies-icon">✨</span>
+          <div>
+            <h1 className="mb-1">Hobbies</h1>
+            <p className="text-muted mb-0">
+              A few things I like doing outside of classes and projects — the
+              stuff that keeps me sane and motivated.
+            </p>
+          </div>
+        </div>
 
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+        <Row className="g-4">
           {hobbies.map((hobby) => (
-            <HobbyCard key={hobby.title} {...hobby} />
+            <Col key={hobby.title} xs={12} sm={6} lg={4}>
+              {/* 1 per row on mobile, 2 on tablet, 3 on desktop */}
+              <HobbyCard {...hobby} />
+            </Col>
           ))}
-        </SimpleGrid>
+        </Row>
       </Container>
-    </Box>
+    </section>
   );
 }
