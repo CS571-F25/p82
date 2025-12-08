@@ -1,5 +1,4 @@
 // src/components/NavBar.jsx
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Box,
@@ -28,12 +27,15 @@ function NavItem({ to, label, end, onClick }) {
       {({ isActive }) => (
         <Link
           px={3}
-          py={2}
+          // no extra vertical padding; let flex centering do the work
           rounded="full"
           fontSize="sm"
           fontWeight={isActive ? "semibold" : "medium"}
           bg={isActive ? "whiteAlpha.200" : "transparent"}
           color="white"
+          display="inline-flex"
+          alignItems="center"
+          height="100%"                 // match navbar height
           _hover={{ textDecoration: "none", bg: "whiteAlpha.200" }}
           onClick={onClick}
         >
@@ -46,7 +48,6 @@ function NavItem({ to, label, end, onClick }) {
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [menuButtonFocused, setMenuButtonFocused] = useState(false);
 
   const handleNavClick = () => {
     onClose();
@@ -62,38 +63,40 @@ export default function NavBar() {
       zIndex={1000}
       boxShadow="sm"
     >
+      {/* This Flex defines a fixed bar height, and centers everything */}
       <Flex
         maxW="6xl"
         mx="auto"
         px={{ base: 4, md: 6 }}
-        h={16}
-        align="center"
+        height="56px"               // fixed navbar height
+        align="center"              // vertical centering
         justify="space-between"
       >
-        {/* Brand */}
-        <NavLink to="/" onClick={handleNavClick}>
-          <Text
-            fontWeight="semibold"
-            fontSize="lg"
-            letterSpacing="wide"
-            _hover={{ textDecoration: "none" }}
-          >
-            Artur Sobol
-          </Text>
-        </NavLink>
+        <Box 
+          as={NavLink}
+          to="/"
+          onClick={handleNavClick}
+          display="flex"
+          alignItems="center"
+          height="56px"
+          fontSize="sm"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          color="white"
+          textDecoration="none"
+          _hover={{ textDecoration: "none" }}
+        >
+          Artur Sobol
+        </Box>
 
-        {/* Desktop links */}
+        {/* Desktop nav items on the right */}
         <HStack spacing={2} display={{ base: "none", md: "flex" }}>
           {links.map((link) => (
-            <NavItem
-              key={link.to}
-              {...link}
-              onClick={handleNavClick}
-            />
+            <NavItem key={link.to} {...link} onClick={handleNavClick} />
           ))}
         </HStack>
 
-        {/* Mobile menu button */}
+        {/* Mobile hamburger button */}
         <IconButton
           display={{ base: "flex", md: "none" }}
           aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -102,13 +105,12 @@ export default function NavBar() {
           color="white"
           _hover={{ bg: "whiteAlpha.200" }}
           _active={{ bg: "whiteAlpha.300" }}
+          height="36px"
           onClick={isOpen ? onClose : onOpen}
-          onFocus={() => setMenuButtonFocused(true)}
-          onBlur={() => setMenuButtonFocused(false)}
         />
       </Flex>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown */}
       {isOpen && (
         <Box
           bg="gray.900"
@@ -124,11 +126,7 @@ export default function NavBar() {
             spacing={1}
           >
             {links.map((link) => (
-              <NavItem
-                key={link.to}
-                {...link}
-                onClick={handleNavClick}
-              />
+              <NavItem key={link.to} {...link} onClick={handleNavClick} />
             ))}
           </Stack>
         </Box>

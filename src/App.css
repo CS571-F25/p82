@@ -133,3 +133,68 @@
 .navbar-toggler {
   padding: 0.35rem 0.7rem;
 }
+
+/* ===== RESUME PAGE ===== */
+
+.resume-section {
+  background: #f5f7fb;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.resume-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* header similar to hobbies/courses */
+.resume-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.resume-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* card holding the PDF */
+
+.resume-card {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
+  border: none;
+  background: #ffffff;
+}
+
+/* embedded PDF frame */
+
+.resume-frame {
+  width: 100%;
+  height: 900px;
+  border: none;
+  display: block;
+}
+
+/* mobile tweak */
+@media (max-width: 768px) {
+  .resume-frame {
+    height: 75vh;
+  }
+
+  .resume-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+

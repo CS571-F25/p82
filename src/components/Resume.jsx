@@ -1,75 +1,51 @@
 // src/components/Resume.jsx
-import {
-  Box,
-  Card,
-  CardBody,
-  Container,
-  Heading,
-  SimpleGrid,
-  Text,
-  List,
-  ListItem,
-} from "@chakra-ui/react";
+import { Container, Button, Card, Stack } from "react-bootstrap";
+import resumePDF from "../assets/Artur_Sobol_Resume.pdf";
 
 export default function Resume() {
+  // Hide the big default PDF toolbar for a cleaner look
+  const pdfUrl = `${resumePDF}#toolbar=0&navpanes=0&scrollbar=0`;
+
   return (
-    <Box as="section" py={8}>
-      <Container maxW="6xl">
-        <Heading mb={6}>Resume</Heading>
+    <section className="resume-section">
+      <Container className="resume-container">
+        {/* Header like your other pages */}
+        <div className="resume-header">
+          <span className="resume-icon">📄</span>
+          <div>
+            <h1 className="mb-1">Resume</h1>
+            <p className="text-muted mb-0">
+              A quick look at my experience, projects, and skills — view it
+              here or download a copy.
+            </p>
+          </div>
+        </div>
 
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-          {/* Education */}
-          <Card>
-            <CardBody>
-              <Heading size="md" mb={3}>
-                Education
-              </Heading>
-              <Text fontWeight="bold">
-                University of Wisconsin–Madison
-              </Text>
-              <Text>B.S. Computer Science</Text>
-              <Text fontSize="sm" color="gray.500">
-                Expected Graduation: 2026
-              </Text>
-            </CardBody>
-          </Card>
+        {/* Actions */}
+        <Stack
+          direction="horizontal"
+          gap={2}
+          className="mb-3 flex-wrap justify-content-center justify-content-md-start"
+        >
+          <a href={resumePDF} download="Artur_Sobol_Resume.pdf">
+            <Button variant="primary">Download PDF</Button>
+          </a>
+          <a href={resumePDF} target="_blank" rel="noreferrer">
+            <Button variant="outline-secondary">Open in new tab</Button>
+          </a>
+        </Stack>
 
-          {/* Experience */}
-          <Card>
-            <CardBody>
-              <Heading size="md" mb={3}>
-                Experience
-              </Heading>
-              <List spacing={1}>
-                <ListItem>
-                  Course projects in web, Android, and systems programming
-                </ListItem>
-                <ListItem>
-                  Team-based software development in CS/ECE courses
-                </ListItem>
-              </List>
-            </CardBody>
-          </Card>
-
-          {/* Skills */}
-          <Card>
-            <CardBody>
-              <Heading size="md" mb={3}>
-                Skills
-              </Heading>
-              <Text mb={1}>
-                <strong>Languages:</strong> Java, Kotlin, C, JavaScript, Python
-              </Text>
-              <Text mb={1}>
-                <strong>Frameworks:</strong> React, React Native, Compose
-              </Text>
-              <Text>
-                <strong>Interests:</strong> systems, hardware, mobile, web
-              </Text>
-            </CardBody>
-          </Card>
-        </SimpleGrid>
+        {/* Card with embedded PDF */}
+        <Card className="resume-card">
+          <Card.Body className="p-0">
+            <iframe
+              src={pdfUrl}
+              title="Artur Sobol Resume"
+              className="resume-frame"
+            />
+          </Card.Body>
+        </Card>
       </Container>
-    </Box>
+    </section>
   );
 }
